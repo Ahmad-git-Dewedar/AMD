@@ -1,0 +1,330 @@
+.hero {
+  --hero-progress: 0;
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--header-h) + 24px);
+  padding-bottom: 96px;
+  overflow: clip;
+}
+
+/* Soft blue light behind the 3D piece, with a faint dot grid */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 52% at 72% 46%, var(--blue-soft), transparent 70%),
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 28px 28px;
+  mask-image: radial-gradient(80% 80% at 60% 45%, #000 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(80% 80% at 60% 45%, #000 30%, transparent 85%);
+}
+
+:root[dir='rtl'] .hero__glow {
+  background:
+    radial-gradient(42% 52% at 28% 46%, var(--blue-soft), transparent 70%),
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 28px 28px;
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.hero__copy {
+  display: grid;
+  gap: 26px;
+  justify-items: start;
+  transform: translateY(calc(var(--hero-progress) * -40px));
+  opacity: calc(1 - var(--hero-progress) * 1.1);
+}
+
+.hero__title {
+  display: grid;
+  font-size: clamp(3.4rem, 9.2vw, 8.4rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+:lang(ar) .hero__title {
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0;
+  font-size: clamp(3.4rem, 8.6vw, 7.6rem);
+}
+
+.hero__line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.06em;
+  overflow-clip-margin: 0.08em;
+}
+
+.hero__line > span {
+  display: inline-block;
+}
+
+/* Arabic dots below the line (the ي of دويدار) need room, or the line's clip cuts them */
+:lang(ar) .hero__line {
+  padding-bottom: 0.2em;
+  overflow-clip-margin: 0.12em;
+}
+
+.hero__line--outline > span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  background: linear-gradient(90deg, var(--blue), var(--blue)) no-repeat 0 0 / 0 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 0.9s var(--ease), -webkit-text-stroke-color 0.4s var(--ease);
+}
+
+:root[dir='rtl'] .hero__line--outline > span {
+  background-position: 100% 0;
+}
+
+.hero__title:hover .hero__line--outline > span {
+  background-size: 100% 100%;
+  -webkit-text-stroke-color: var(--blue);
+}
+
+/* Arabic letters join and overlap, so a plain outline shows the seams inside the word
+   (between the ي and the د of دويدار, and where the ي's dots meet the د). Here the
+   outline is drawn first, at twice the width, and each letter is filled with the page
+   colour on top: only the outer edge of the whole word stays visible */
+:lang(ar) .hero__line--outline > span {
+  color: var(--bg);
+  background: none;
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  transition: color 0.6s var(--ease), -webkit-text-stroke-color 0.6s var(--ease);
+}
+
+:lang(ar) .hero__title:hover .hero__line--outline > span {
+  color: var(--blue);
+  -webkit-text-stroke-color: var(--blue);
+}
+
+.hero__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 600;
+}
+
+.hero__role-rule {
+  width: 44px;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+.hero__intro {
+  color: var(--ink-2);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  max-width: 46ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.hero__actions .btn {
+  height: 62px;
+  --btn-pad: 32px;
+  font-size: 1.08rem;
+  gap: 12px;
+}
+
+.hero__actions .btn .icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Ribbon visual ---------- */
+
+.hero__visual {
+  position: relative;
+  height: min(82svh, 780px);
+  min-height: 420px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  /* The portrait sizes to whichever is smaller, the column's width or its height */
+  container-type: size;
+}
+
+/* ---------- Portrait, with the languages circling it ---------- */
+
+.portrait-wrap {
+  --size: min(88cqw, 88cqh, 560px);
+  --icon: clamp(44px, 12%, 64px);
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+/* The photo itself stays clean; it is a little smaller than the circle the icons ride on */
+.portrait {
+  width: 78%;
+  aspect-ratio: 1;
+  margin: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #121418;
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.55);
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The path the icons follow */
+.orbit {
+  position: absolute;
+  inset: calc(var(--icon) / 2);
+  border-radius: 50%;
+  border: 1px dashed var(--line-strong);
+}
+
+/* Each icon sits at its own angle on the circle; the counter-rotation keeps it upright */
+.orbit__item {
+  --angle: calc(360deg / var(--n) * var(--i) - 90deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--icon);
+  height: var(--icon);
+  margin: calc(var(--icon) / -2);
+  transform: rotate(var(--angle)) translateX(calc(var(--size) / 2 - var(--icon) / 2)) rotate(calc(var(--angle) * -1));
+}
+
+.orbit__item .skill-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 30%;
+  background: color-mix(in srgb, var(--tint) 14%, var(--bg-raised));
+  box-shadow: var(--shadow);
+}
+
+.orbit__item .skill-icon svg {
+  width: 54%;
+  height: 54%;
+}
+
+/* ---------- Entrance ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__role,
+  .hero__intro,
+  .hero__actions {
+    animation: rise 0.9s var(--ease) both;
+  }
+
+  .hero__line > span {
+    animation: line-up 1s var(--ease) both;
+  }
+
+  .hero__line:nth-child(2) > span { animation-delay: 0.08s; }
+  .hero__role { animation-delay: 0.25s; }
+  .hero__intro { animation-delay: 0.32s; }
+  .hero__actions { animation-delay: 0.4s; }
+
+  .hero__visual {
+    animation: fade-in 1.4s var(--ease) 0.2s both;
+  }
+
+  /* The ring turns slowly; each icon turns back the other way so it never tips over */
+  .orbit {
+    animation: orbit-turn 40s linear infinite;
+  }
+
+  .orbit__item .skill-icon {
+    animation: orbit-turn 40s linear infinite reverse;
+  }
+}
+
+@keyframes orbit-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes line-up {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 960px) {
+  .hero {
+    align-items: flex-start;
+    padding-bottom: 88px;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .hero__visual {
+    order: -1;
+    height: clamp(260px, 42svh, 460px);
+    min-height: 0;
+    margin-inline: auto;
+    max-width: 620px;
+  }
+
+  .hero__glow {
+    background:
+      radial-gradient(60% 34% at 50% 26%, var(--blue-soft), transparent 70%),
+      radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 28px 28px;
+  }
+
+  :root[dir='rtl'] .hero__glow {
+    background:
+      radial-gradient(60% 34% at 50% 26%, var(--blue-soft), transparent 70%),
+      radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 28px 28px;
+  }
+}
+
+@media (max-width: 560px) {
+
+  .hero__copy {
+    gap: 20px;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}

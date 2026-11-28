@@ -1,0 +1,349 @@
+/* ---------- A project's logo as a square tile ---------- */
+
+.project-art {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background: var(--logo-bg, #0b0c0f);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.project-art img {
+  display: block;
+}
+
+.project-art--full img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-art--mark img {
+  width: var(--logo-size, 56%);
+  height: auto;
+  object-fit: contain;
+}
+
+/* A thin light edge, like glass */
+.project-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+/* ---------- Showcase ---------- */
+
+/* Switching slides the stage sideways; keep that inside the section on narrow screens */
+.projects {
+  overflow-x: clip;
+}
+
+.showcase {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+.showcase__stage {
+  --dir: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+  touch-action: pan-y;
+}
+
+.showcase__stage.is-back {
+  --dir: -1;
+}
+
+:root[dir='rtl'] .showcase__stage {
+  --dir: -1;
+}
+
+:root[dir='rtl'] .showcase__stage.is-back {
+  --dir: 1;
+}
+
+/* The visual: the logo artwork, with the site's screenshot laid over its corner */
+.showcase__visual {
+  position: relative;
+  display: block;
+  max-width: 520px;
+  width: 100%;
+  justify-self: center;
+  isolation: isolate;
+}
+
+.showcase__visual::before {
+  content: '';
+  position: absolute;
+  inset: 6% 10% 10% 4%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 45%, transparent), transparent);
+  filter: blur(30px);
+  opacity: 0.7;
+}
+
+.showcase__art {
+  box-shadow: var(--shadow-lift);
+  transition: transform 0.8s var(--ease);
+}
+
+.showcase__visual:hover .showcase__art {
+  transform: translateY(-6px) rotate(-1deg);
+}
+
+.showcase__info {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+
+.showcase__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.showcase__count {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--blue);
+  letter-spacing: 0.04em;
+}
+
+.showcase__count span {
+  color: var(--ink-3);
+  font-weight: 600;
+}
+
+.showcase__type {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+}
+
+:lang(ar) .showcase__type {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.86rem;
+}
+
+.showcase__summary {
+  color: var(--ink-2);
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  max-width: 48ch;
+}
+
+.showcase__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.showcase__tech li {
+  font-family: var(--font-en);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+}
+
+.showcase__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+/* The switcher: arrows either side of a row of logo tiles */
+.showcase__nav {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.showcase__rail {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 2px;
+}
+
+.showcase__rail::-webkit-scrollbar {
+  display: none;
+}
+
+.showcase__tab {
+  flex: 1 0 auto;
+  min-width: 132px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 8px;
+  padding-inline: 8px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: start;
+  transition: border-color var(--medium) var(--ease), color var(--medium) var(--ease), background-color var(--medium) var(--ease), transform var(--medium) var(--ease);
+}
+
+.showcase__tab:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.showcase__tab.is-active {
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line-strong));
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-raised));
+}
+
+.showcase__thumb {
+  width: 40px;
+  flex: none;
+  border-radius: 11px;
+}
+
+/* Wide screens: all seven tiles in one row of equal columns, logo above name */
+@media (min-width: 1000px) {
+  .showcase__rail {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .showcase__tab {
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .showcase__thumb {
+    width: 52px;
+    border-radius: 14px;
+  }
+
+  .showcase__tab-name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.84rem;
+  }
+}
+
+.showcase__thumb.project-art--mark img {
+  width: 76%;
+}
+
+.showcase__tab-name {
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .showcase__stage .showcase__visual {
+    animation: showcase-visual 0.7s var(--ease) both;
+  }
+
+  .showcase__stage .showcase__info > * {
+    animation: showcase-text 0.6s var(--ease) both;
+  }
+
+  .showcase__stage .showcase__info > :nth-child(2) { animation-delay: 0.05s; }
+  .showcase__stage .showcase__info > :nth-child(3) { animation-delay: 0.1s; }
+  .showcase__stage .showcase__info > :nth-child(4) { animation-delay: 0.15s; }
+  .showcase__stage .showcase__info > :nth-child(5) { animation-delay: 0.2s; }
+}
+
+@keyframes showcase-visual {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir) * 40px)) scale(0.97);
+  }
+}
+
+@keyframes showcase-screen {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes showcase-text {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 900px) {
+  .showcase__stage {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .showcase__visual {
+    max-width: 560px;
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .showcase__nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .showcase__rail {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .showcase__nav .round-btn--prev {
+    justify-self: start;
+  }
+
+  .showcase__nav .round-btn:last-child {
+    justify-self: end;
+  }
+
+  .showcase__tab {
+    min-width: 0;
+    flex: none;
+  }
+
+  .showcase__actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}

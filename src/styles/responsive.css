@@ -1,0 +1,102 @@
+/* Screen size and orientation. Everything else is fluid; these steps handle the ends:
+   very large screens grow the whole design so it never feels empty, landscape
+   phones get a side by side hero so nothing is cramped */
+
+/* ---------- Large screens: scale type and content width together ---------- */
+
+@media (min-width: 1680px) {
+  html {
+    font-size: 106.25%;
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+
+@media (min-width: 2400px) {
+  html {
+    font-size: 131.25%;
+  }
+}
+
+@media (min-width: 3200px) {
+  html {
+    font-size: 162.5%;
+  }
+}
+
+/* ---------- Landscape phones and short screens ---------- */
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .hero {
+    min-height: auto;
+    align-items: center;
+    padding-top: calc(var(--header-h) + 8px);
+    padding-bottom: 56px;
+  }
+
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 24px;
+  }
+
+  .hero__visual {
+    order: 0;
+    height: 72svh;
+    min-height: 0;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+  }
+
+  :lang(ar) .hero__title {
+    font-size: clamp(2.4rem, 6.4vw, 4rem);
+  }
+
+  .hero__copy {
+    gap: 14px;
+  }
+
+  .hero__actions .btn {
+    height: 52px;
+    --btn-pad: 24px;
+    font-size: 1rem;
+  }
+
+  .section {
+    padding-block: 72px;
+  }
+
+  .showcase__stage,
+  .project-hero__grid {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  }
+
+  .showcase__visual,
+  .project-hero__visual {
+    order: 0;
+  }
+
+}
+
+/* ---------- Small phones ---------- */
+
+@media (max-width: 380px) {
+  .hero__title {
+    font-size: 3rem;
+  }
+
+  .hero__actions .btn {
+    height: 56px;
+    --btn-pad: 22px;
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.9rem;
+  }
+}

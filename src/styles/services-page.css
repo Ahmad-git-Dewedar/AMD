@@ -1,0 +1,296 @@
+/* ---------- Services page: a code editor ----------
+   The editor keeps its dark look in both themes, like a real one */
+
+.services-page {
+  padding: calc(var(--header-h) + clamp(40px, 6vw, 80px)) 0 clamp(80px, 10vw, 140px);
+}
+
+.services-page__head {
+  display: grid;
+  gap: 18px;
+  max-width: 680px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.editor {
+  --ed-bg: #0d1117;
+  --ed-panel: #11161e;
+  --ed-line: rgba(255, 255, 255, 0.08);
+  --ed-ink: #e6edf3;
+  --ed-dim: #7d8590;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-line);
+  box-shadow: var(--shadow-lift);
+  color: var(--ed-ink);
+}
+
+.editor__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--ed-panel);
+  border-bottom: 1px solid var(--ed-line);
+}
+
+.editor__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.editor__dots i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.editor__dots i:nth-child(2) {
+  background: #febc2e;
+}
+
+.editor__dots i:nth-child(3) {
+  background: #28c840;
+}
+
+.editor__path {
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 0.84rem;
+  color: var(--ed-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editor__body {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+}
+
+/* The list of services */
+.editor__side {
+  background: var(--ed-panel);
+  border-inline-end: 1px solid var(--ed-line);
+  padding: 12px;
+}
+
+.editor__side ol {
+  display: grid;
+  gap: 4px;
+}
+
+.editor__file {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  text-align: start;
+  color: var(--ed-dim);
+  transition: background-color var(--medium) var(--ease), color var(--medium) var(--ease);
+}
+
+.editor__file:hover {
+  color: var(--ed-ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.editor__file.is-active {
+  color: var(--ed-ink);
+  background: rgba(77, 124, 255, 0.14);
+}
+
+.editor__file-num {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.8rem;
+  padding-top: 3px;
+  color: var(--ed-dim);
+}
+
+.editor__file-text {
+  display: grid;
+  gap: 4px;
+}
+
+.editor__file-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.editor__file-name {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--ed-dim);
+}
+
+.editor__file.is-active .editor__file-name {
+  color: #79c0ff;
+}
+
+/* Tabs and code */
+.editor__main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor__tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--ed-line);
+}
+
+.editor__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.editor__tab {
+  flex: none;
+  padding: 14px 22px;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.86rem;
+  color: var(--ed-dim);
+  border-inline-end: 1px solid var(--ed-line);
+  border-top: 2px solid transparent;
+  transition: color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+}
+
+.editor__tab:hover {
+  color: var(--ed-ink);
+}
+
+.editor__tab.is-active {
+  color: var(--ed-ink);
+  background: var(--ed-bg);
+  border-top-color: #4d7cff;
+}
+
+.code {
+  padding: 22px 0 28px;
+  overflow-x: auto;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(0.84rem, 1.2vw, 1rem);
+  line-height: 2;
+  min-height: 420px;
+}
+
+.code__line {
+  display: flex;
+  white-space: pre;
+}
+
+.code__num {
+  flex: none;
+  width: 3.6em;
+  padding-inline-end: 1.2em;
+  text-align: end;
+  color: #484f58;
+  user-select: none;
+}
+
+/* Long lines wrap and keep their indentation, like an editor with word wrap on */
+.code__text {
+  padding-inline-end: 24px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Arabic text inside the code keeps the site's Arabic face */
+.code [lang='ar'] {
+  font-family: var(--font-ar);
+}
+
+.tok-key {
+  color: #ff7b72;
+}
+
+.tok-name {
+  color: #d2a8ff;
+}
+
+.tok-prop {
+  color: #79c0ff;
+}
+
+.tok-str {
+  color: #a5d6ff;
+}
+
+.tok-comment {
+  color: #8b949e;
+  font-style: italic;
+}
+
+.tok-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(165, 214, 255, 0.4);
+  text-underline-offset: 3px;
+}
+
+.tok-link:hover {
+  color: #ffffff;
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .code .code__line {
+    animation: code-line 0.4s var(--ease) both;
+  }
+}
+
+@keyframes code-line {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+
+.services-page__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(36px, 5vw, 56px);
+}
+
+.services__more {
+  align-self: flex-end;
+}
+
+/* ---------- Smaller screens: the service list runs across the top ---------- */
+
+@media (max-width: 860px) {
+  .editor__body {
+    grid-template-columns: 1fr;
+  }
+
+  .editor__side {
+    border-inline-end: 0;
+    border-bottom: 1px solid var(--ed-line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .editor__side ol {
+    display: flex;
+    gap: 6px;
+  }
+
+  .editor__file {
+    width: auto;
+    white-space: nowrap;
+    padding: 10px 14px;
+  }
+
+  .editor__tabs {
+    display: none;
+  }
+
+  .code {
+    min-height: 0;
+    font-size: 0.8rem;
+  }
+}

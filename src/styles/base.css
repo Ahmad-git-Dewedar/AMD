@@ -1,0 +1,202 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  transition: background-color var(--medium) var(--ease), color var(--medium) var(--ease);
+}
+
+:lang(ar) body,
+body:lang(ar) {
+  line-height: 1.85;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+:lang(ar) h1,
+:lang(ar) h2,
+:lang(ar) h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--blue);
+  color: var(--on-blue);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+main:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-s);
+  background: var(--blue);
+  color: var(--on-blue);
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: top var(--fast) var(--ease), opacity var(--fast) var(--ease);
+}
+
+.skip-link:focus {
+  top: 12px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.icon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+/* Arrows point along the reading direction */
+[dir='rtl'] .icon--arrow,
+:root[dir='rtl'] .icon--arrow {
+  transform: scaleX(-1);
+}
+
+.icon--back {
+  transform: scaleX(-1);
+}
+
+:root[dir='rtl'] .icon--back {
+  transform: none;
+}
+
+/* Scroll reveal: quick and short, never on reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
+    transition-delay: calc(var(--d, 0) * 70ms);
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Project transitions: a short crossfade, with the shared image morphing between pages */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease);
+}
+
+::view-transition-group(*) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}

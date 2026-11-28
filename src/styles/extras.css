@@ -1,0 +1,374 @@
+/* Skills band, services, process, more generous spacing, and the quiet motion
+   that keeps the page alive between scrolls. All movement stops with reduced motion */
+
+/* ---------- Spacing: taller sections throughout ---------- */
+
+.section {
+  padding-block: clamp(110px, 14vw, 200px);
+}
+
+.section-head {
+  margin-bottom: clamp(48px, 6vw, 88px);
+}
+
+/* ---------- Ambient light behind the whole page ---------- */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(30vmax 30vmax at 20% 30%, var(--blue-soft), transparent 70%),
+    radial-gradient(26vmax 26vmax at 80% 70%, color-mix(in srgb, var(--blue) 8%, transparent), transparent 70%);
+}
+
+/* ---------- Brand: the name with a live blue dot ---------- */
+
+.brand::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 0 var(--blue-glow);
+}
+
+/* ---------- Skills band ---------- */
+
+.marquee {
+  display: grid;
+  gap: 14px;
+  padding-block: clamp(28px, 4vw, 44px);
+  border-block: 1px solid var(--line);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__row {
+  display: flex;
+  width: max-content;
+}
+
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: clamp(28px, 4vw, 56px);
+  padding-inline-end: clamp(28px, 4vw, 56px);
+}
+
+.marquee__track li {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+  font-family: var(--font-en);
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.marquee__track li::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+.marquee__row--reverse .marquee__track li {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-3);
+}
+
+/* ---------- Services ---------- */
+
+.services__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: clamp(28px, 3.4vw, 44px);
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform var(--medium) var(--ease), box-shadow var(--medium) var(--ease), border-color var(--medium) var(--ease);
+}
+
+/* A slow blue light drifting inside each card */
+.service::before {
+  content: '';
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  inset-inline-end: -20%;
+  top: -30%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--blue-soft), transparent);
+}
+
+.service:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--line-strong);
+}
+
+.service__index {
+  font-family: var(--font-en);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--blue);
+}
+
+.service__title {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+}
+
+.service__body {
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+
+.service__seen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.86rem;
+  color: var(--ink-3);
+}
+
+.service__project {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-weight: 600;
+  transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.service__project:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--on-blue);
+}
+
+/* ---------- Process ---------- */
+
+.process {
+  background: var(--bg-soft);
+}
+
+.process__track {
+  position: relative;
+}
+
+/* The line that joins the steps, with a light that keeps travelling along it */
+.process__line {
+  position: absolute;
+  top: 27px;
+  inset-inline: 28px;
+  height: 1px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.process__line::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 22%;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  transform: translateX(-100%);
+}
+
+.process__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.step {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.step__dot {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-soft);
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+  transition: background-color var(--medium) var(--ease), color var(--medium) var(--ease), border-color var(--medium) var(--ease);
+}
+
+.step:hover .step__dot {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--on-blue);
+}
+
+.step__title {
+  font-size: 1.3rem;
+}
+
+.step__body {
+  color: var(--ink-2);
+}
+
+/* ---------- Motion that runs without scrolling ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: aurora 26s ease-in-out infinite alternate;
+  }
+
+  .brand::after,
+  .eyebrow__dot {
+    animation: pulse 2.6s ease-out infinite;
+  }
+
+  .marquee__row .marquee__track {
+    animation: marquee 48s linear infinite;
+  }
+
+  .marquee__row--reverse .marquee__track {
+    animation-direction: reverse;
+    animation-duration: 56s;
+  }
+
+  .service::before {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+
+  .service:nth-child(2n)::before {
+    animation-delay: -7s;
+  }
+
+  .process__line::after {
+    animation: travel 4.5s var(--ease-in-out) infinite;
+  }
+
+  :root[dir='rtl'] .process__line::after {
+    animation-direction: reverse;
+  }
+
+  /* A sheen that crosses the main button every few seconds */
+  .btn--primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%) no-repeat;
+    background-size: 250% 100%;
+    background-position: 150% 0;
+    animation: btn-sheen 4.5s var(--ease-in-out) 2s infinite;
+    pointer-events: none;
+  }
+
+  .contact__panel::before {
+    animation: drift-slow 18s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes aurora {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(6vmax, -4vmax, 0);
+  }
+  100% {
+    transform: translate3d(-5vmax, 5vmax, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--blue-glow);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translate(-40%, 60%) scale(1.2);
+  }
+}
+
+@keyframes drift-slow {
+  to {
+    transform: translate(-4%, 3%);
+  }
+}
+
+@keyframes travel {
+  to {
+    transform: translateX(560%);
+  }
+}
+
+@keyframes btn-sheen {
+  0% {
+    background-position: 150% 0;
+  }
+  40%,
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 900px) {
+  .services__list {
+    grid-template-columns: 1fr;
+  }
+
+  .process__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 48px;
+  }
+
+  .process__line {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .process__steps {
+    grid-template-columns: 1fr;
+  }
+}

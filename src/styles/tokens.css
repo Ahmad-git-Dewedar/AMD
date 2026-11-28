@@ -1,0 +1,79 @@
+/* Design tokens: black, white and one blue. Light is the base, dark overrides it */
+:root {
+  --font-en: 'Raleway', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ar: 'Readex Pro', 'Segoe UI', Tahoma, sans-serif;
+  --font: var(--font-en);
+
+  --bg: #ffffff;
+  --bg-soft: #f4f6fa;
+  --bg-raised: #ffffff;
+  --ink: #0a0b0d;
+  --ink-2: #474d5a;
+  --ink-3: #7a8191;
+  --line: rgba(10, 11, 13, 0.1);
+  --line-strong: rgba(10, 11, 13, 0.2);
+  --blue: #1f5eff;
+  --blue-hover: #1048e0;
+  --blue-soft: rgba(31, 94, 255, 0.1);
+  --blue-glow: rgba(31, 94, 255, 0.22);
+  --on-blue: #ffffff;
+  --shadow: 0 1px 2px rgba(10, 11, 13, 0.04), 0 12px 32px -12px rgba(10, 11, 13, 0.16);
+  --shadow-lift: 0 2px 4px rgba(10, 11, 13, 0.05), 0 28px 60px -20px rgba(10, 11, 13, 0.28);
+  --header-bg: rgba(255, 255, 255, 0.78);
+
+  --radius-s: 10px;
+  --radius: 18px;
+  --radius-l: 28px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 77.5rem; /* 1240px at the default size; grows with the type on large screens */
+  --header-h: 72px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --fast: 180ms;
+  --medium: 420ms;
+  --slow: 800ms;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #07080a;
+  --bg-soft: #0e1014;
+  --bg-raised: #12151b;
+  --ink: #f4f6fa;
+  --ink-2: #a6aebd;
+  --ink-3: #6f7787;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --blue: #4d7cff;
+  --blue-hover: #6b92ff;
+  --blue-soft: rgba(77, 124, 255, 0.14);
+  --blue-glow: rgba(77, 124, 255, 0.32);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.4), 0 32px 70px -24px rgba(0, 0, 0, 0.8);
+  --header-bg: rgba(7, 8, 10, 0.72);
+
+  color-scheme: dark;
+}
+
+/* Before the app sets data-theme, follow the device */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #07080a;
+    --bg-soft: #0e1014;
+    --bg-raised: #12151b;
+    --ink: #f4f6fa;
+    --ink-2: #a6aebd;
+    --ink-3: #6f7787;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --blue: #4d7cff;
+    --header-bg: rgba(7, 8, 10, 0.72);
+    color-scheme: dark;
+  }
+}
+
+:root[lang='ar'] {
+  --font: var(--font-ar);
+}
